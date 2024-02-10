@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logs-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logs
+  template:
+    metadata:
+      labels:
+        app: logs
+    spec:
+      volumes: # Define volume
+        - name: outputs
+          persistentVolumeClaim:
+            claimName: volume-claim
+      containers:
+        - name: log-writer
+          image: lapalmerjack/output-saver:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts: # Mount volume
+            - name: outputs
+              mountPath: /app/storage
+        - name: log-reader
+          image: lapalmerjack/output-reader:v7
+          ports:
+            - containerPort: 8081
+          volumeMounts: # Mount volume
+            - name: outputs
+              mountPath: /app/storage
+        - name: ping-ponger
+          image: lapalmerjack/pingpong:v10
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          volumeMounts: # Mount volume
+            - name: outputs
+              mountPath: /app/storage

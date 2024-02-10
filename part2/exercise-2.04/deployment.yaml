@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kubernetes-project
+  name: frontend-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: lapalmerjack/kubernetes-frontend:ingress
+          ports:
+            - containerPort: 3000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kubernetes-project
+  name: backend-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: lapalmerjack/kubernetes-project:cors
+          ports:
+            - containerPort: 8080
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubernetes-project
+  name: frontend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubernetes-project
+  name: backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 8080
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: kubernetes-project
+  name: busybox1
+  labels:
+    app: busybox1
+spec:
+  containers:
+  - image: busybox
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+    name: busybox
+  restartPolicy: Always
