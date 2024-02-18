@@ -22,7 +22,7 @@ spec:
             - name: EXAMPLE
               valueFrom:
                 configMapKeyRef:
-                  name: hello-config
+                  name: database-config
                   key: example.string
 
 

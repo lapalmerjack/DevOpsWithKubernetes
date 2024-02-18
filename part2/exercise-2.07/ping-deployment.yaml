@@ -15,9 +15,26 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: lapalmerjack/pingpong:newest
+          image: lapalmerjack/pingpong:2.3000
+      
           ports:
             - containerPort: 8083
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+            - name: PASSWORD
+              valueFrom: 
+                secretKeyRef: 
+                  name: postgres-secrets
+                  key: password
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: database.url
 
 ---
 

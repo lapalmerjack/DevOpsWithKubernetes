@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: kubernetes-project
+  name: database-configuration
+data:
+  database.url: "jdbc:postgresql://database-svc:5432/todos"
+  
