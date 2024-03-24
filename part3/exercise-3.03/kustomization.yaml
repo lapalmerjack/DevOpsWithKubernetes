@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - postgres-secrets.yaml
+  - database-config.yaml
+  - statefulset.yaml
+images:
+  - name: BACKEND/IMAGE
+    newName: lapalmerjack/kubernetes-project:2.10v1

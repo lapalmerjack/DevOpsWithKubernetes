@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ping-pong-uuid
+  name: ping-pong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-pong
+  template:
+    metadata:
+      labels:
+        app: ping-pong
+    spec:
+      containers:
+        - name: ping-pong
+          image: lapalmerjack/pingpong:2.3000
+      
+          ports:
+            - containerPort: 8083
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+            - name: PASSWORD
+              valueFrom: 
+                secretKeyRef: 
+                  name: postgres-secrets
+                  key: password
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: database.url
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ping-pong-uuid
+  name: ping-pong-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: ping-pong
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 8083
+
