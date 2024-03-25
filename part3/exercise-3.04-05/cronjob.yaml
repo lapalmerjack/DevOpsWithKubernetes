@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: note-adder
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: note-adder
+            image: lapalmerjack/cronjob:201
+            imagePullPolicy: IfNotPresent
+            args:
+            - "/bin/sh"
+            - "-c"
+            - "curl -X POST -H \"Content-Type: application/json\" -d '{\"note\":\"Read random article: https://en.wikipedia.org/wiki/Special:Random\"}' http://backend-service:2345/add"
+          restartPolicy: OnFailure

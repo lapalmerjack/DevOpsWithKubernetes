@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-configuration
+data:
+  database.url: "jdbc:postgresql://database-svc:5432/todos"
+  
