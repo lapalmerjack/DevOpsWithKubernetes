@@ -4,6 +4,3 @@ resources:
   - postgres-secrets.yaml
   - database-config.yaml
   - statefulset.yaml
-images:
-  - name: BACKEND/IMAGE
-    newName: lapalmerjack/kubernetes-project:2.10v1

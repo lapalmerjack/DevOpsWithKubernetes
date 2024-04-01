@@ -1,7 +1,6 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  namespace: kubernetes-project
   name: note-adder
 spec:
   schedule: "* * * * *"
