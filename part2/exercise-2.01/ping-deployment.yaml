@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ping-pong-dep
+  name: ping-pong-dep-2.01
 spec:
   replicas: 1
   selector:
@@ -14,12 +14,11 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: lapalmerjack/pingpong:newest
+          image: lapalmerjack/pingpong-2.01-v1
           ports:
             - containerPort: 8083
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -32,4 +31,3 @@ spec:
     - port: 2345
       protocol: TCP
       targetPort: 8083
-

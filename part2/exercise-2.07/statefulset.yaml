@@ -9,7 +9,6 @@ spec:
   ports:
     - port: 5432
       name: router
-  # Remove the line below if you want a regular service with a cluster IP
   clusterIP: None
   selector:
     app: database
@@ -48,12 +47,10 @@ spec:
                   name: postgres-secrets
                   key: password
             - name: POSTGRES_DB
-              value: "pingpong"
-              
+              value: "pingpong" 
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
-  
   volumeClaimTemplates:
     - metadata:
         name: data

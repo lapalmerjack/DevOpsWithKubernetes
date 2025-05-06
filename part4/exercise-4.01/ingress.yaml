@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   namespace: ping-pong-uuid
   name: ping-pong-uuid-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
   - http:
@@ -11,9 +13,17 @@ spec:
         pathType: Prefix
         backend:
           service:
+            name: ping-pong-service
+            port:
+              number: 2345
+  - http:
+      paths:
+      - path: /pingpong
+        pathType: Prefix
+        backend:
+          service:
             name: logging-svc
             port:
               number: 2345
-
 
 

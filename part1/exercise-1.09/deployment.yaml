@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong
+  template:
+    metadata:
+      labels:
+        app: pingpong
+    spec:
+      containers:
+        - name: timestamp
+          image: lapalmerjack/pingpong-1.09-v1
+          ports:  # This should be 'ports' instead of 'port'
+            - containerPort: 8083  # Define the correct field name

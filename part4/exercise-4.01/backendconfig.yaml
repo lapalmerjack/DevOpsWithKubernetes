@@ -1,0 +1,25 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: ping-pong-health-check
+spec:
+  healthCheck:
+    type: HTTP
+    port: 8083
+    requestPath: /actuator/health  
+    checkIntervalSec: 10
+    timeoutSec: 5
+ 
+---
+
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: logging-health-check
+spec:
+  healthCheck:
+    type: HTTP
+    port: 8080
+    requestPath: /actuator/health  
+    checkIntervalSec: 10
+    timeoutSec: 5

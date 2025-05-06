@@ -15,10 +15,15 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image:  lapalmerjack/pingpong-2.07
-      
+          image:  lapalmerjack/pingpong-4.01
           ports:
             - containerPort: 8083
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            initialDelaySeconds: 60
+            periodSeconds: 50
           env:
             - name: USERNAME
               valueFrom:
@@ -35,7 +40,6 @@ spec:
                 configMapKeyRef:
                   name: database-config
                   key: database.url
-
 ---
 
 apiVersion: v1
@@ -43,8 +47,10 @@ kind: Service
 metadata:
   namespace: ping-pong-uuid
   name: ping-pong-service
+  annotations:
+   cloud.google.com/backend-config: '{"default": "ping-pong-health-check"}'
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: ping-pong
   ports:

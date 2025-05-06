@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: logging
+  name: dwk-material-ingress
 spec:
   rules:
   - http:
@@ -13,5 +13,4 @@ spec:
             name: logging-svc
             port:
               number: 2345
-     
-
+                

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timestamp-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timestamp
+  template:
+    metadata:
+      labels:
+        app: timestamp
+    spec:
+      containers:
+        - name: timestamp
+          image: lapalmerjack/timestamper-v2
+          ports:
+            - containerPort: 8080

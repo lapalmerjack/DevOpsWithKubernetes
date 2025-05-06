@@ -1,0 +1,430 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/restartedAt: "2025-05-04T13:04:08+02:00"
+    linkerd.io/created-by: linkerd/proxy-injector edge-25.5.1
+    linkerd.io/inject: enabled
+    linkerd.io/proxy-version: edge-25.5.1
+    linkerd.io/trust-root-sha256: fdab132fa9bdfd8a5588c566354c33f6f530233130a8e875c1fcd72df630aed7
+    viz.linkerd.io/tap-enabled: "true"
+  creationTimestamp: "2025-05-04T11:07:13Z"
+  generateName: frontend-848dcf79b5-
+  labels:
+    app: frontend
+    linkerd.io/control-plane-ns: linkerd
+    linkerd.io/proxy-deployment: frontend
+    linkerd.io/workload-ns: main
+    pod-template-hash: 848dcf79b5
+  name: frontend-848dcf79b5-xf795
+  namespace: main
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: frontend-848dcf79b5
+    uid: 5e0e7118-b112-4f67-8ad6-8df3260b39f8
+  resourceVersion: "4394685"
+  uid: 2838aff1-fd97-4787-ad96-fd64c21aecfd
+spec:
+  containers:
+  - env:
+    - name: _pod_name
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: _pod_ns
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    - name: _pod_uid
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.uid
+    - name: _pod_nodeName
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.nodeName
+    - name: _pod_containerName
+      value: linkerd-proxy
+    - name: LINKERD2_PROXY_CORES
+      value: "1"
+    - name: LINKERD2_PROXY_CORES_MIN
+      value: "1"
+    - name: LINKERD2_PROXY_SHUTDOWN_ENDPOINT_ENABLED
+      value: "false"
+    - name: LINKERD2_PROXY_LOG
+      value: warn,linkerd=info,hickory=error,[{headers}]=off,[{request}]=off
+    - name: LINKERD2_PROXY_LOG_FORMAT
+      value: plain
+    - name: LINKERD2_PROXY_DESTINATION_SVC_ADDR
+      value: linkerd-dst-headless.linkerd.svc.cluster.local.:8086
+    - name: LINKERD2_PROXY_DESTINATION_PROFILE_NETWORKS
+      value: 10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8,34.118.224.0/20
+    - name: LINKERD2_PROXY_POLICY_SVC_ADDR
+      value: linkerd-policy.linkerd.svc.cluster.local.:8090
+    - name: LINKERD2_PROXY_POLICY_WORKLOAD
+      value: |
+        {"ns":"$(_pod_ns)", "pod":"$(_pod_name)"}
+    - name: LINKERD2_PROXY_INBOUND_DEFAULT_POLICY
+      value: all-unauthenticated
+    - name: LINKERD2_PROXY_POLICY_CLUSTER_NETWORKS
+      value: 10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8,34.118.224.0/20
+    - name: LINKERD2_PROXY_CONTROL_STREAM_INITIAL_TIMEOUT
+      value: 3s
+    - name: LINKERD2_PROXY_CONTROL_STREAM_IDLE_TIMEOUT
+      value: 5m
+    - name: LINKERD2_PROXY_CONTROL_STREAM_LIFETIME
+      value: 1h
+    - name: LINKERD2_PROXY_INBOUND_CONNECT_TIMEOUT
+      value: 100ms
+    - name: LINKERD2_PROXY_OUTBOUND_CONNECT_TIMEOUT
+      value: 1000ms
+    - name: LINKERD2_PROXY_OUTBOUND_DISCOVERY_IDLE_TIMEOUT
+      value: 5s
+    - name: LINKERD2_PROXY_INBOUND_DISCOVERY_IDLE_TIMEOUT
+      value: 90s
+    - name: LINKERD2_PROXY_CONTROL_LISTEN_ADDR
+      value: 0.0.0.0:4190
+    - name: LINKERD2_PROXY_ADMIN_LISTEN_ADDR
+      value: 0.0.0.0:4191
+    - name: LINKERD2_PROXY_OUTBOUND_LISTEN_ADDR
+      value: 127.0.0.1:4140
+    - name: LINKERD2_PROXY_OUTBOUND_LISTEN_ADDRS
+      value: 127.0.0.1:4140
+    - name: LINKERD2_PROXY_INBOUND_LISTEN_ADDR
+      value: 0.0.0.0:4143
+    - name: LINKERD2_PROXY_INBOUND_IPS
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.podIPs
+    - name: LINKERD2_PROXY_INBOUND_PORTS
+      value: "3001"
+    - name: LINKERD2_PROXY_DESTINATION_PROFILE_SUFFIXES
+      value: svc.cluster.local.
+    - name: LINKERD2_PROXY_INBOUND_ACCEPT_KEEPALIVE
+      value: 10000ms
+    - name: LINKERD2_PROXY_OUTBOUND_CONNECT_KEEPALIVE
+      value: 10000ms
+    - name: LINKERD2_PROXY_INBOUND_ACCEPT_USER_TIMEOUT
+      value: 30s
+    - name: LINKERD2_PROXY_OUTBOUND_CONNECT_USER_TIMEOUT
+      value: 30s
+    - name: LINKERD2_PROXY_OUTBOUND_METRICS_HOSTNAME_LABELS
+      value: "false"
+    - name: LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL
+      value: 10s
+    - name: LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT
+      value: 3s
+    - name: LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL
+      value: 10s
+    - name: LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT
+      value: 3s
+    - name: LINKERD2_PROXY_INBOUND_PORTS_DISABLE_PROTOCOL_DETECTION
+      value: 25,587,3306,4444,5432,6379,9300,11211
+    - name: LINKERD2_PROXY_DESTINATION_CONTEXT
+      value: |
+        {"ns":"$(_pod_ns)", "nodeName":"$(_pod_nodeName)", "pod":"$(_pod_name)"}
+    - name: _pod_sa
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.serviceAccountName
+    - name: _l5d_ns
+      value: linkerd
+    - name: _l5d_trustdomain
+      value: cluster.local
+    - name: LINKERD2_PROXY_IDENTITY_DIR
+      value: /var/run/linkerd/identity/end-entity
+    - name: LINKERD2_PROXY_IDENTITY_TRUST_ANCHORS
+      value: |
+        -----BEGIN CERTIFICATE-----
+        MIIBiDCCAS6gAwIBAgIBATAKBggqhkjOPQQDAjAcMRowGAYDVQQDExFpZGVudGl0
+        eS5saW5rZXJkLjAeFw0yNTA1MDMwODI5MThaFw0yNjA1MDMwODI5MzhaMBwxGjAY
+        BgNVBAMTEWlkZW50aXR5LmxpbmtlcmQuMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+        QgAE6K2yxtan/0+SJwwZgROEsMOinzasXNGDIS6AEqgZhmBWwaFpcVqXu4pkTfNc
+        kGyGGcPTPkChMBWQsvREbhVuNKNhMF8wDgYDVR0PAQH/BAQDAgEGMB0GA1UdJQQW
+        MBQGCCsGAQUFBwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+        BBRx6U5eQ4UQQ+feTyikAQGPj/XXkzAKBggqhkjOPQQDAgNIADBFAiEA5RpchwQD
+        SIM+LQ3Wm8fp1jj2smSz/A8AnEG+KpsQQWQCIAlXpCwOPYhEElvm+smPURHGwjxv
+        +sUhoagRfoHhkVMP
+        -----END CERTIFICATE-----
+    - name: LINKERD2_PROXY_IDENTITY_TOKEN_FILE
+      value: /var/run/secrets/tokens/linkerd-identity-token
+    - name: LINKERD2_PROXY_IDENTITY_SVC_ADDR
+      value: linkerd-identity-headless.linkerd.svc.cluster.local.:8080
+    - name: LINKERD2_PROXY_IDENTITY_LOCAL_NAME
+      value: $(_pod_sa).$(_pod_ns).serviceaccount.identity.linkerd.cluster.local
+    - name: LINKERD2_PROXY_IDENTITY_SVC_NAME
+      value: linkerd-identity.linkerd.serviceaccount.identity.linkerd.cluster.local
+    - name: LINKERD2_PROXY_DESTINATION_SVC_NAME
+      value: linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+    - name: LINKERD2_PROXY_POLICY_SVC_NAME
+      value: linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+    - name: LINKERD2_PROXY_TAP_SVC_NAME
+      value: tap.linkerd-viz.serviceaccount.identity.linkerd.cluster.local
+    image: cr.l5d.io/linkerd/proxy:edge-25.5.1
+    imagePullPolicy: IfNotPresent
+    lifecycle:
+      postStart:
+        exec:
+          command:
+          - /usr/lib/linkerd/linkerd-await
+          - --timeout=2m
+          - --port=4191
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /live
+        port: 4191
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: linkerd-proxy
+    ports:
+    - containerPort: 4143
+      name: linkerd-proxy
+      protocol: TCP
+    - containerPort: 4191
+      name: linkerd-admin
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /ready
+        port: 4191
+        scheme: HTTP
+      initialDelaySeconds: 2
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 2102
+      seccompProfile:
+        type: RuntimeDefault
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: FallbackToLogsOnError
+    volumeMounts:
+    - mountPath: /var/run/linkerd/identity/end-entity
+      name: linkerd-identity-end-entity
+    - mountPath: /var/run/secrets/tokens
+      name: linkerd-identity-token
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-f649f
+      readOnly: true
+  - image: gcr.io/dwk-gke-450416/frontend:main-32341181da1dd6146060d55bece7eb0faf29c0e9
+    imagePullPolicy: IfNotPresent
+    name: frontend
+    ports:
+    - containerPort: 3001
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-f649f
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  initContainers:
+  - args:
+    - --ipv6=false
+    - --incoming-proxy-port
+    - "4143"
+    - --outgoing-proxy-port
+    - "4140"
+    - --proxy-uid
+    - "2102"
+    - --inbound-ports-to-ignore
+    - 4190,4191,4567,4568
+    - --outbound-ports-to-ignore
+    - 4567,4568
+    image: cr.l5d.io/linkerd/proxy-init:v2.4.2
+    imagePullPolicy: IfNotPresent
+    name: linkerd-init
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+        - NET_ADMIN
+        - NET_RAW
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 65534
+      runAsNonRoot: true
+      runAsUser: 65534
+      seccompProfile:
+        type: RuntimeDefault
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: FallbackToLogsOnError
+    volumeMounts:
+    - mountPath: /run
+      name: linkerd-proxy-init-xtables-lock
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-f649f
+      readOnly: true
+  nodeName: gke-dwk-cluster-default-pool-3064d4d4-xhuf
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  readinessGates:
+  - conditionType: cloud.google.com/load-balancer-neg-ready
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-f649f
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+  - emptyDir: {}
+    name: linkerd-proxy-init-xtables-lock
+  - emptyDir:
+      medium: Memory
+    name: linkerd-identity-end-entity
+  - name: linkerd-identity-token
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          audience: identity.l5d.io
+          expirationSeconds: 86400
+          path: linkerd-identity-token
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: null
+    message: 'Pod has become Healthy in NEG "Key{\"k8s1-cdf5dedf-main-frontend-service-2345-442484e1\",
+      zone: \"europe-north1-b\"}" attached to BackendService "Key{\"k8s1-cdf5dedf-main-frontend-service-2345-442484e1\"}".
+      Marking condition "cloud.google.com/load-balancer-neg-ready" to True.'
+    reason: LoadBalancerNegReady
+    status: "True"
+    type: cloud.google.com/load-balancer-neg-ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-05-04T11:07:17Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2025-05-04T11:07:19Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-05-04T11:07:37Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-05-04T11:07:23Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-05-04T11:07:13Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://61a371e376ae98d260bfb773ae9c07e0b0fdbb9de8de0f22fd89868c3c99b68c
+    image: gcr.io/dwk-gke-450416/frontend:main-32341181da1dd6146060d55bece7eb0faf29c0e9
+    imageID: gcr.io/dwk-gke-450416/frontend@sha256:c62c223343f7a617238cfa5dd00993d9c9f56d4a9ab8cb77c6389546467add84
+    lastState: {}
+    name: frontend
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-05-04T11:07:22Z"
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-f649f
+      readOnly: true
+      recursiveReadOnly: Disabled
+  - containerID: containerd://93a0dea2dd805e1b0e4eb8a5041ae1c22f7e6953f6694a9c4e0c5bcfee5476ce
+    image: cr.l5d.io/linkerd/proxy:edge-25.5.1
+    imageID: cr.l5d.io/linkerd/proxy@sha256:15d63e76b5b4471a5d3b96667bc18b6be908cdbab9420ad5c87e16395b0d631b
+    lastState: {}
+    name: linkerd-proxy
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-05-04T11:07:20Z"
+    volumeMounts:
+    - mountPath: /var/run/linkerd/identity/end-entity
+      name: linkerd-identity-end-entity
+    - mountPath: /var/run/secrets/tokens
+      name: linkerd-identity-token
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-f649f
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 10.166.0.46
+  hostIPs:
+  - ip: 10.166.0.46
+  initContainerStatuses:
+  - containerID: containerd://0c080168578a2ce6fa324023c6821c9a8723a01dae5c34768c489e63a6d2ef37
+    image: cr.l5d.io/linkerd/proxy-init:v2.4.2
+    imageID: cr.l5d.io/linkerd/proxy-init@sha256:fa4ffce8c934f3a6ec89e97bda12d94b1eb485558681b9614c9085e37a1b4014
+    lastState: {}
+    name: linkerd-init
+    ready: true
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://0c080168578a2ce6fa324023c6821c9a8723a01dae5c34768c489e63a6d2ef37
+        exitCode: 0
+        finishedAt: "2025-05-04T11:07:18Z"
+        reason: Completed
+        startedAt: "2025-05-04T11:07:17Z"
+    volumeMounts:
+    - mountPath: /run
+      name: linkerd-proxy-init-xtables-lock
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-f649f
+      readOnly: true
+      recursiveReadOnly: Disabled
+  phase: Running
+  podIP: 10.44.3.60
+  podIPs:
+  - ip: 10.44.3.60
+  qosClass: BestEffort
+  startTime: "2025-05-04T11:07:13Z"

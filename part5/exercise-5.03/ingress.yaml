@@ -1,17 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: logging
+  name: app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  - host: localtest.me  # maps to 127.0.0.1 automatically; useful for local dev
+    http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: logging-svc
+            name: app-svc
             port:
               number: 2345
-     
-

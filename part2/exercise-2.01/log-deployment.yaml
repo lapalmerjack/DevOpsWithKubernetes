@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: log-reader
-          image: lapalmerjack/output-reader:latest
+          image:  lapalmerjack/log-output-2.01-v1
           ports:
             - containerPort: 8080
 

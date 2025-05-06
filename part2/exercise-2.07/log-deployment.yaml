@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: log-reader
-          image: lapalmerjack/outputreader:2.06
+          image: lapalmerjack/timestamper-2.07
           ports:
             - containerPort: 8080
           env:

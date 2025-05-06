@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: lapalmerjack/pingpong:2.3000
+          image: lapalmerjack/pingpong-3.02
       
           ports:
             - containerPort: 8083
