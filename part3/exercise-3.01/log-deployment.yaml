@@ -25,7 +25,6 @@ spec:
                   name: database-config
                   key: example.string
 
-
 ---
 
 apiVersion: v1

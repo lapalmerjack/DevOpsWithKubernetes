@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: kubernetes-project
+  name: db-backup
+spec:
+  schedule: "0 2 * * *" 
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: google/cloud-sdk:alpine  
+            command:
+              - /bin/sh
+              - -c
+              - |
+                export GOOGLE_APPLICATION_CREDENTIALS="/secrets/key.json"
+                TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+                PGPASSWORD=$POSTGRES_PASSWORD pg_dump -h database-ss-0.database-svc -U $POSTGRES_USER -d $POSTGRES_DB > /tmp/backup.sql
+                gsutil cp /tmp/backup.sql gs://ej-project-backup/todos-$TIMESTAMP.sql
+            env:
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-secrets
+                    key: username
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-secrets
+                    key: password
+              - name: POSTGRES_DB
+                value: "todos"
+            volumeMounts:
+              - name: gcs-key-volume
+                mountPath: /secrets
+                readOnly: true
+          restartPolicy: OnFailure
+          volumes:
+            - name: gcs-key-volume
+              secret:
+                secretName: gcs-key

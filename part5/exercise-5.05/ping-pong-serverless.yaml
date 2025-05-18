@@ -1,0 +1,49 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ping-pong
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - image: lapalmerjack/pingpong-3.02
+          ports:
+            - containerPort: 8083
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: username
+            - name: PASSWORD
+              valueFrom: 
+                secretKeyRef: 
+                  name: postgres-secrets
+                  key: password
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: database.url
+---
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: log-reader
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - name: log-reader
+          image: lapalmerjack/timestamper-3.02
+          ports:
+            - containerPort: 8080
+          env:
+            - name: EXAMPLE
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: example.string
